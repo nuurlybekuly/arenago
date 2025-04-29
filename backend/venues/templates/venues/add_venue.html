@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/add_venue.css' %}">
+</head>
+<body>
+    <section class="first-section">
+
+
+        {% include './header.html' %}
+
+
+        <form id="venueForm" method="post" enctype="multipart/form-data" class="content">
+    {% csrf_token %}
+
+    <div class="left">
+        <div class="image-div">
+            <div class="main-div">
+                <p>Main photo of venue</p>
+                <div class="main-image-container">
+                    <img src="{% static 'images/default_img.png' %}" alt="">
+                    <div class="main-buttons">
+                        <input class="add_image_input" type="file" name="image">
+                        <button class="mainChange" type="button">Change</button>
+                        <button class="mainDelete" type="button">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="add-div">
+                <p>Additional photos of venue</p>
+                <div class="add-images">
+                    <div class="image-container">
+                        <img src="{% static 'images/default_img.png' %}" alt="">
+                        <div class="buttons">
+                            <input class="add_image_input" type="file" name="image1">
+                            <button type="button">Change</button>
+                            <button type="button">Delete</button>
+                        </div>
+                    </div>
+                    <div class="image-container">
+                        <img src="{% static 'images/default_img.png' %}" alt="">
+                        <div class="buttons">
+                            <input class="add_image_input" type="file" name="image2">
+                            <button type="button">Change</button>
+                            <button type="button">Delete</button>
+                        </div>
+                    </div>
+                    <div class="image-container">
+                        <img src="{% static 'images/default_img.png' %}" alt="">
+                        <div class="buttons">
+                            <input class="add_image_input" type="file" name="image3">
+                            <button type="button">Change</button>
+                            <button type="button">Delete</button>
+                        </div>
+                    </div>
+                    <div class="image-container">
+                        <img src="{% static 'images/default_img.png' %}" alt="">
+                        <div class="buttons">
+                            <input class="add_image_input" type="file" name="image4">
+                            <button type="button">Change</button>
+                            <button type="button">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <img class="left_img" src="{% static 'images/add_ven_img' %}" alt="">
+    </div>
+
+    <div class="right">
+        <div class="venue-info">
+            <h1>Add venue</h1>
+
+            <div class="name-div">
+                <p>Venue name</p>
+                <input type="text" name="name" placeholder="Please, enter your venue name">
+            </div>
+
+            <div class="category-div">
+                <p>Venue category</p>
+                <select name="category">
+                    <option value="Football">Football</option>
+                    <option value="Volleyball">Volleyball</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="Tennis">Tennis</option>
+                    <option value="Ping Pong">Ping Pong</option>
+                </select>
+            </div>
+
+            <div class="price-div">
+                <p>Price</p>
+                <input type="text" name="price_per_hour" placeholder="Please, enter price per hour">
+            </div>
+
+            <div class="location-div">
+                <p>Location</p>
+                <input type="text" name="location" placeholder="Please, enter location of your venue">
+            </div>
+
+            <div class="location-link-div">
+                <p>Location link</p>
+                <input type="text" name="location_link" placeholder="Please, paste the link of your venue address">
+            </div>
+
+            <div class="desc-div">
+                <p>Description</p>
+                <textarea name="description" placeholder="Please, enter more details of your venue"></textarea>
+            </div>
+
+            <div class="document-div">
+                <label class="doc-word">Documentation</label>
+                <label class="doc-word-2">Please, upload an official document for your venue. We’ll confirm it.</label>
+                <div class="document-content">
+                    <img src="{% static 'images/add_ven_document' %}" alt="">
+                    <div>
+                        <p>Choose a file or drag & drop it here</p>
+                        <p>PDF, DOCX formats up to 50MB </p>
+                    </div>
+                    <input type="file" name="document">
+                </div>
+            </div>
+            <div class="working-div">
+                <p class="tit">Write you working time of your venue</p>
+                <p class="error-time" style="color:red; display: none;"></p>
+                 <div class="working-time">
+                <select class="from-input">
+                  <option value="">From</option>
+                  <!-- Loop 0 to 23 -->
+                  <option value="00:00">00:00</option>
+                  <option value="01:00">01:00</option>
+                  <option value="02:00">02:00</option>
+                  <option value="03:00">03:00</option>
+                  <option value="04:00">04:00</option>
+                  <option value="05:00">05:00</option>
+                  <option value="06:00">06:00</option>
+                  <option value="07:00">07:00</option>
+                  <option value="08:00">08:00</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                  <option value="18:00">18:00</option>
+                  <option value="19:00">19:00</option>
+                  <option value="20:00">20:00</option>
+                  <option value="21:00">21:00</option>
+                  <option value="22:00">22:00</option>
+                  <option value="23:00">23:00</option>
+                </select>
+
+                <select class="till-input">
+                  <option value="">Till</option>
+                  <!-- Same list as above -->
+                  <option value="00:00">00:00</option>
+                  <option value="01:00">01:00</option>
+                  <option value="02:00">02:00</option>
+                  <option value="03:00">03:00</option>
+                  <option value="04:00">04:00</option>
+                  <option value="05:00">05:00</option>
+                  <option value="06:00">06:00</option>
+                  <option value="07:00">07:00</option>
+                  <option value="08:00">08:00</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                  <option value="18:00">18:00</option>
+                  <option value="19:00">19:00</option>
+                  <option value="20:00">20:00</option>
+                  <option value="21:00">21:00</option>
+                  <option value="22:00">22:00</option>
+                  <option value="23:00">23:00</option>
+                </select>
+              </div>
+            </div>
+            <div class="day-buttons">
+              <p>Select your working days:</p>
+                <div class="all-days">
+                    <div class="day-btn" id="1" data-day="Monday">Monday</div>
+                    <div class="day-btn" id="2" data-day="Tuesday">Tuesday</div>
+                    <div class="day-btn" id="3" data-day="Wednesday">Wednesday</div>
+                    <div class="day-btn" id="4" data-day="Thursday">Thursday</div>
+                    <div class="day-btn" id="5" data-day="Friday">Friday</div>
+                    <div class="day-btn" id="6" data-day="Saturday">Saturday</div>
+                    <div class="day-btn" id="7" data-day="Sunday">Sunday</div>
+                </div>
+            </div>
+
+            <input type="hidden" name="start" id="startInput">
+            <input type="hidden" name="end" id="endInput">
+            <input type="hidden" name="working_days" id="workingDaysInput">
+
+
+
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+    </section>
+
+
+    {% include './footer.html' %}
+
+    <script src="{% static 'js/add_venue.js' %}"></script>
+</body>
+</html>

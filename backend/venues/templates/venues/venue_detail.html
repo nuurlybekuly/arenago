@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ venue.name }}</title>
+</head>
+<body>
+    <h1>{{ venue.name }}</h1>
+
+     {% if venue.image %}
+        <img src="{{ venue.image.url }}" alt="Venue Image" width="300">
+    {% else %}
+        <p>No image available</p>
+    {% endif %}
+
+
+    <p>Category: {{ venue.category }}</p>
+    <p>Capacity: {{ venue.capacity }}</p>
+    <p>Price per hour: ${{ venue.price_per_hour }}</p>
+    <p>Location: {{ venue.location }}</p>
+    <p>Description: {{ venue.description }}</p>
+    <p>Rating: {{ venue.rating }}/5</p>
+</body>
+</html>

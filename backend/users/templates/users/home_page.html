@@ -1,0 +1,256 @@
+
+<!--{% load static %}-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Home</title>-->
+<!--    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Welcome to Our Website</h1>-->
+<!--    <p>This is the homepage.</p>-->
+
+<!--    <a href="{% url 'login_page' %}">Log In</a>-->
+<!--    <a href="{% url 'signup_page' %}">Sign Up</a>-->
+
+<!--    {% if user.is_authenticated %}-->
+<!--        <a href="{% url 'add_venue' %}">Add Your Venue</a>-->
+<!--    {% else %}-->
+<!--        <p>Please <a href="{% url 'login_page' %}">log in</a> to add a venue.</p>-->
+<!--    {% endif %}-->
+<!--</body>-->
+<!--</html>-->
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/home_page.css' %}">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+<!--<p>Current User: {{ user }}</p>-->
+<!--<p>Authenticated: {{ user.is_authenticated }}</p>-->
+
+    <section class="first-section">
+        <header>
+            <div class="header-container">
+                <div class="head-up">
+                    <div class="logo-div">
+                        <a href="{% url 'home_page' %}"><img class="logotype" src="{% static 'images/generalLogo.png'%}" alt=""></a>
+                    </div>
+                    <div class="search-div">
+<!--                        <img src="/for_diploma/images/search.png" alt="">-->
+                        <input onemptied="searchVenue()" onkeydown="searchVenue()" type="text" placeholder="Search venues">
+                    </div>
+                    <div class="register">
+                        <div class="add-venue">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'add_venue' %}">Add your venue</a>
+                            {% else %}
+                                <a href="{% url 'login_page' %}">Add your venue</a>
+                            {% endif %}
+                        </div>
+                        <div class="lang">
+                            <img src="{% static 'images/ukFlag.png' %}" alt="UK Flag" class="flag-icon">
+                            <span>EN</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+
+                        <!-- Notification Icon -->
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}"> <div class="notification">
+                                <img src="{% static 'images/notify.png' %}" alt="Bell Icon">
+                            </div></a>
+                        {% endif %}
+
+
+
+
+                        <!-- Profile Section -->
+                       <div class="profile">
+                            {% if user.is_authenticated %}
+                                <a style="text-decoration: none" href="{% url 'profile' %}"><span> {{ user.username }}</span></a>
+                            {% else %}
+                                <button class="login-btn" onclick="window.location.href='{% url 'login_page' %}'">Login</button>
+                                <button class="signup-btn" onclick="window.location.href='{% url 'signup_page' %}'">Sign Up</button>
+                            {% endif %}
+                       </div>
+
+
+
+
+
+                    </div>
+                </div>
+<!--        Phone        -->
+                <div class="hamburger" onclick="toggleMenu()">
+        ☰
+    </div>
+
+    <!-- 👇 This div contains all that will hide/show -->
+<!--    <div class="menu-content">-->
+<!--        <div class="search-div">-->
+<!--            <input onemptied="searchVenue()" onkeydown="searchVenue()" type="text" placeholder="Search venues">-->
+<!--        </div>-->
+<!--        <div class="register">-->
+<!--            <div class="add-venue">-->
+<!--                {% if user.is_authenticated %}-->
+<!--                    <a href="{% url 'add_venue' %}">Add your venue</a>-->
+<!--                {% else %}-->
+<!--                    <a href="{% url 'login_page' %}">Add your venue</a>-->
+<!--                {% endif %}-->
+<!--            </div>-->
+<!--            <div class="lang">-->
+<!--                <img src="{% static 'images/ukFlag.png' %}" alt="UK Flag" class="flag-icon">-->
+<!--                <span>EN</span>-->
+<!--                <span class="dropdown-arrow">▼</span>-->
+<!--            </div>-->
+<!--            {% if user.is_authenticated %}-->
+<!--                <a href="{% url 'profile' %}">-->
+<!--                    <div class="notification">-->
+<!--                        <img src="{% static 'images/notify.png' %}" alt="Bell Icon">-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            {% endif %}-->
+<!--            <div class="profile">-->
+<!--                {% if user.is_authenticated %}-->
+<!--                    <a style="text-decoration: none" href="{% url 'profile' %}"><span> {{ user.username }}</span></a>-->
+<!--                {% else %}-->
+<!--                    <button class="login-btn" onclick="window.location.href='{% url 'login_page' %}'">Login</button>-->
+<!--                    <button class="signup-btn" onclick="window.location.href='{% url 'signup_page' %}'">Sign Up</button>-->
+<!--                {% endif %}-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
+<!--        Phone         -->
+                <div class="head-middle">
+                    <label class="big">Your Next Match Starts Here!</label><br>
+                    <label class="small">Find and book the best slabelorts venues in seconds.</label>
+                </div>
+                <div class="head-down">
+                    <div class="down-container">
+                        <div class="city-div">
+                            <div class="selected-city">
+                                <div class="curr-city">
+                                    <img src= "{% static 'images/location.png' %}" alt="">
+                                    Almaty
+                                </div>
+
+                                <span>▼</span>
+                                <div class="other-city">
+                                    <div>Almaty</div>
+                                    <div>Astana</div>
+                                    <div>Shymkent</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sport-type-div">
+                            <div class="selected-sport">
+                                <div class="curr-sport">
+                                    <img src="{% static 'images/footballSign.png' %}" alt="">
+                                    All sports
+                                </div>
+                                <div class="other-sports">
+                                    <div>All sports</div>
+                                    <div>Football</div>
+                                    <div>Basketball</div>
+                                    <div>Volleyball</div>
+                                    <div>Tennis</div>
+                                    <div>Ping Pong</div>
+                                </div>
+
+                                <span>▼</span>
+                            </div>
+                        </div>
+                       <div class="from-div">
+                            <span>from (&#8376):</span>
+                            <input type="number" id="minPrice" placeholder="10000" min="0">
+                        </div>
+                        <div class="to-div">
+                            <span>to (&#8376)</span>
+                            <input type="number" id="maxPrice" placeholder="10000" min="0">
+                        </div>
+                        <button onclick="filterVenues()" class="down-search">Search</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="venues-container">
+            <div class="venue-topic">
+                <h1>Popular Venues</h1>
+            </div>
+            <div class="venues-div">
+                <!-- Venues CArd -->
+            </div>
+        </div>
+    </section>
+
+<!-- Venue Detail -->
+
+<div class="detail-container">
+    <div class="navtar">
+        <a href="{% url 'home_page' %}"><label class="homepageBtn" for="">Homepage > </label></a> <a href=""><label class="venueDetailBtn" for=""> Venue detail</label></a>
+    </div>
+    <div class="detail-content">
+
+    </div>
+    <div class="slot-div">
+        <div class="schedule-container">
+            <h2 class="schedule-title">SCHEDULE</h2>
+            <div class="date-row">
+<!--                <span class="date" style="background-color: #1e3a8a;color: white;">Today</span>-->
+
+            </div>
+            <div class="time-slots">
+
+
+            </div>
+            <a href="{% url 'home_page' %}"><button class="book-btn">Book slot</button></a>
+
+        </div>
+        <div class="slot-detail">
+            <p class="topic">Selected Slots:</p>
+            <p class="slot-list"></p>
+            <p class="total-price">Total price: <b class="totalPrice" style="color: #1e3a8a;">16000  &#8376</b> </p>
+        </div>
+    </div>
+</div>
+
+        <!-- Book ANimation -->
+        <div id="confirmation" class="confirmation-box">
+            ✅ Booking Confirmed!
+        </div>
+
+    <footer>
+        <p class="footer-title">ArenaGO</p>
+        <nav class="footer-nav">
+            <a href="#">Home</a>
+            <a href="#">FAQs</a>
+            <a href="#">About</a>
+            <a href="#">Contact us</a>
+            <a href="#">Add your venue</a>
+        </nav>
+        <div class="footer-icons">
+            <img src="{% static 'images/facebook.png' %}" alt="">
+            <img src="{% static 'images/insta.png' %}" alt="">
+            <img src="{% static 'images/youtube.png' %}" alt="">
+            <img src="{% static 'images/linkedin.png' %}" alt="">
+        </div>
+        <p class="footer-rights">© All rights Reserved</p>
+    </footer>
+
+    <script src="{% static 'js/homePage.js' %}">
+    </script>
+</body>
+</html>

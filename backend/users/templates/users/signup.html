@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href='https://fonts.googleapis.com/css?family=Rubik' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-side">
+            <div class="left-content">
+                <div class="arrow-back"><</div>
+                <h1>Booking with us</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis. Sed ac semper orci, eu porttitor lacus.</p>
+                <img class="pitch-in-login" src="{% static 'images/pitchInLogin.png' %}" alt="">
+            </div>
+        </div>
+        <div class="right-side">
+
+
+
+                <form class="right-content" method="POST" action="{% url 'signup_page' %}">
+                      {% csrf_token %}
+                     <div>
+                        <h2>Sign Up</h2>
+                          {% if messages %}
+                                {% for message in messages %}
+                                    <p style="color: red;" class="warn-wrong">{{ message }}</p>
+                                {% endfor %}
+                          {% endif %}
+                     </div>
+                    <div class="names-container">
+                        <div class="first-name-div">
+                            <label for="">First name</label>
+                            <input type="text" name="first-name" placeholder="Please enter your First name" required>
+                        </div>
+                        <div class="last-name-div">
+                            <label for="">Last name</label>
+                            <input type="text" name="last-name" placeholder="Please enter your Last name" required>
+                        </div>
+                    </div>
+
+                    <div class="username-container">
+                        <label for="">Username</label>
+                        <input class="username-input" type="text" name="username" placeholder="Please enter your username" required>
+                    </div>
+
+                    <div class="email-container">
+                        <label for="">Email</label>
+                        <input type="email" name="email" placeholder="Please enter your email" required>
+                    </div>
+
+                    <div class="password-div">
+                        <div class="password-and-eye">
+                            <label for="">Password</label>
+                            <img class="closed-eye" src="{% static 'images/closedEyeSign.png' %}" alt="">
+                        </div>
+                        <div class="password-field">
+                            <input id="password-input" type="password" name="password" placeholder="Please enter your password" required>
+                            <p>Use 8 or more characters with a mix of letters, numbers & symbols</p>
+                        </div>
+                    </div>
+
+                    <div class="passwordC-div">
+                        <div class="passwordC-and-eye">
+                            <label for="">Confirm Password</label>
+                            <img class="closed-eye" src="{% static 'images/closedEyeSign.png' %}" alt="">
+                        </div>
+                        <input id="passwordC-input" type="password" name="confirm-password" placeholder="Please confirm your password" required>
+                    </div>
+
+                    <p class="terms-policy">By creating an account, you agree to the <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a></p>
+
+                    <button type="submit" class="signup-button">Sign Up</button>
+
+                    <p class="already">Already have an account? <a href="{% url 'login_page' %}">Log In</a></p>
+                </form>
+            </div>
+    </div>
+
+
+<!--    <form action="verify.php" method="POST" class="verification-container">-->
+<!--        <p>Enter the 4-digit verification code sent to your email:</p>-->
+<!--        <input type="text" name="verification_code" id="verification-code" maxlength="4" placeholder="&#45;&#45;&#45;&#45;" required />-->
+<!--        <button type="button" id="resend-code">Resend Code</button>-->
+<!--        <button type="submit" id="submit-code">Submit</button>-->
+<!--        {% if messages %}-->
+<!--    {% for message in messages %}-->
+<!--        <p class="{{ message.tags }}">{{ message }}</p>-->
+<!--    {% endfor %}-->
+<!--{% endif %}-->
+<!--    </form>-->
+
+
+
+
+    <script src="{% static 'js/signup.js' %}"></script>
+</body>
+</html>

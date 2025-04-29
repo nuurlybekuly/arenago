@@ -1,0 +1,166 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+    font-family: 'Rubik';
+}
+.container{
+    width: 100%;
+    display: flex;
+}
+.left-side{
+    width: 50%;
+    height: 100vh;
+    background-color: #1f1f1f;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left-content{
+    width: 70%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.left-content .arrow-back{
+    font-size: 70px;
+    padding-left: 10px;
+}
+.left-content .arrow-back:hover{
+    color: #1E3A8A;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.left-content h1{
+    font-size: 50px;
+    padding-left: 10px;
+}
+.left-content p{
+    font-size: 25px;
+    padding-left: 10px;
+}
+.left-content .pitch-in-login{
+    width: 100%;
+}
+.right-side{
+    width: 50%;
+    height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.right-content{
+    width: 70%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.right-content h2{
+    font-family: 'Rubik';
+    padding-bottom: 10px;
+}
+.right-content label{
+    color: #666666;
+    font-size: 16px;
+}
+.right-content .email-input,.right-content .password-input{
+    width: 100%;
+    height: 10%;
+    border-radius: 40px;
+    border: grey 1px solid;
+    font-size: 18px;
+    padding: 0px 25px;
+}
+.password-div{
+    display: flex;
+    width: 105%;
+    padding-top: 10px;
+    justify-content: space-between;
+}
+.password-div img{
+    width: 20px;
+}
+.incorrect-password{
+    color: red;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+.remember-div{
+    display: flex;
+}
+.remember-div input{
+    width: 30px;
+}
+.remember-div label{
+    font-size: 110%;
+}
+.terms-policy{
+    color: #333333;
+    text-align: center;
+}
+.terms-policy a{
+    color: #111111;
+}
+.login-button{
+    width: 100%;
+    height: 12%;
+    border-radius: 40px;
+    border: none;
+    background-color: #C3C3C3;
+    color: white;
+    font-size: 150%;
+}
+.login-button:hover{
+    background-color: #1E3A8A;
+    transition: 0.3s;
+}
+.forget-password{
+    color: #111111;
+    font-weight:600;
+    text-align: center;
+}
+.dont-have{
+    color: #666666;
+    text-align: center;
+}
+.dont-have a{
+    color: #1E3A8A;
+    cursor: pointer;
+}
+@media screen and (max-width: 880px) {
+    .left-side{
+        display: none;
+    }
+    .left-side{
+        width: 100%;
+    }
+    .right-side{
+        width: 100%;
+    }
+    /* .right-content h2{
+        font-size: 45px;
+        text-align: center;
+    }
+    .right-content label{
+        font-size: 28px;
+    }
+    .right-content .email-input,.right-content .password-input{
+        font-size: 28px;
+    }
+    .terms-policy{
+        font-size: 25px;
+    }
+    .forget-password{
+        font-size: 28px;
+    }
+    .dont-have{
+        font-size: 28px;
+    } */
+}

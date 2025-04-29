@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link href='https://fonts.googleapis.com/css?family=Rubik' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="left-side">
+            <div class="left-content">
+                <a href="{% url 'home_page' %}"><div class="arrow-back"><</div></a>
+                <h1>Booking with us</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis. Sed ac semper orci, eu porttitor lacus.</p>
+                <img class="pitch-in-login" src="{% static 'images/pitchInLogin.png' %}" alt="">
+            </div>
+        </div>
+        <div class="right-side">
+
+                <form class="right-content" method="POST" action="{% url 'login_page' %}">
+                     {% csrf_token %}
+                    <div>
+                        <h2>Log In</h2>
+                        {% if messages %}
+                        {% for message in messages %}
+                            <p style="color: red;">{{ message }}</p>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <label >Email address or username</label>
+                    <input class="email-input" type="text" name="username" placeholder="Email or Username" required>
+
+                    <div class="password-div">
+                        <label >Password</label>
+                        <img class="closed-eye" src="{% static 'images/closedEyeSign.png' %}" alt="">
+                    </div>
+
+                    <input class="password-input" type="password" name="password" placeholder="Password" required>
+
+                    <p class="incorrect-password"></p>
+
+                    <div class="remember-div">
+                        <input type="checkbox">
+                        <label >Remember me</label>
+
+                    </div>
+
+                    <p class="terms-policy">By continuing, you agree to the <a href="#">Terms of use</a> and <a href="#">Privacy Policy.</a> </p>
+
+                    <button class="login-button" type="submit">Log In</button>
+
+                    <a class="forget-password" href="#">Forget your password?</a>
+
+                    <p class="dont-have">Don't have an account? <a href="{% url 'signup_page' %}">Sign Up</a></p>
+               </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>

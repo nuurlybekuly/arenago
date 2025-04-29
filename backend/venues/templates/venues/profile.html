@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/prof.css' %}">
+</head>
+<body>
+    <!-- HEADER -->
+    <section class="first-section">
+        {% include './header.html' %}
+
+    <!-- PROFILE USER -->
+    <div class="user-profile">
+        <div class="sidebar">
+            <h2>My profile</h2>
+
+
+
+            <ul class="menu">
+                <li class="active"><img src="{% static 'images/userInfoBlack.png' %}" alt="User Info"> User Info</li>
+                <li><img onc src="{% static 'images/favour.png' %}" alt="Favorites"> Favorites</li>
+                <li><img src="{% static 'images/history.png' %}" alt="History"> History</li>
+                <li><img src="{% static 'images/setting.png' %}" alt="Setting"> Setting</li>
+                <li><img src="{% static 'images/not.png' %}" alt="Notifications"> Notifications</li>
+                <li onclick="showLogoutPopup()" style="color: red; font-weight: bold;">
+                    <a href="#"  style="color: red; font-weight: bold; text-decoration: none;">
+                        <img src="{% static 'images/logout.png' %}" alt="" style="vertical-align: middle; margin-right: 8px;">
+                        Log Out
+                    </a>
+                </li>
+
+                <!-- Logout confirmation modal -->
+                <div id="logoutPopup" class="popup-overlay">
+                    <form method="post" class="popup-content" action="{% url 'logout' %}">
+                        <p>Are you sure you want to log out?</p>
+                        {% csrf_token %}
+                        <button type="submit">Yes</button>
+                        <button onclick="hideLogoutPopup()">Cancel</button>
+                    </form>
+                </div>
+            </ul>
+        </div>
+
+        <div class="user-info">
+            <div class="user-info-div">
+                <h2>User Info</h2>
+                <div class="user-logo-div">
+                    <img src="{% static 'images/default_img.png' %}" alt="">
+                    <div>
+                        <h3 class="name-h3"></h3>
+                        <p class="username-p"></p>
+                    </div>
+                </div>
+
+                <div class="inputs-div">
+                    <div>
+                        <label for="">First Name</label>
+                        <input oninput="fnEdit()" readonly class="fn-input" value="" type="text">
+                    </div>
+                    <div>
+                        <label for="">Last Name</label>
+                        <input oninput="lnEdit()" readonly class="ln-input" value="" type="text">
+                    </div>
+                    <div>
+                        <label for="">Username</label>
+                        <input oninput="usEdit()" readonly class="us-input" value="" type="text">
+                    </div>
+                    <div>
+                        <label for="">Email</label>
+                        <input readonly class="em-input" value="" type="text">
+                    </div>
+
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+
+                </div>
+
+
+                <p class="user-info-warn"></p>
+                <button onclick="editClicked()" class="editBtn">Edit</button>
+                <div class="afterEdit">
+                    <button class="delete-acc-btn">Delete account</button>
+                    <button onclick="updateUserInfo()" class="saveBtn">Save</button>
+                </div>
+
+            </div>
+        </div>
+
+       <div class="fav">
+            <h1>Favourite venues</h1>
+            <div class="fav-venue-dives">
+
+            </div>
+        </div>
+        <div class="settingUser">
+            <div class="settings-wrapper">
+                <h2 class="settings-title">Settings</h2>
+                <!--<div class="password-section">
+                  <div class="password-toggle" onclick="togglePasswordForm()">
+                    <h3 class="password-heading">Change Password     <span class="arrow-icon" id="arrowIcon">       &#8250;</span></h3>
+                  </div>
+                  <div class="password-form" id="passwordForm">
+                    <div class="input-group">
+                      <label for="current-password">Current Password</label>
+                      <input type="password" id="current-password" class="password-input" />
+                    </div>
+
+                    <div class="input-group">
+                      <label for="new-password">New Password</label>
+                      <input type="password" id="new-password" class="password-input" />
+                    </div>
+
+                    <div class="input-group">
+                      <label for="confirm-password">Confirm Password</label>
+                      <input type="password" id="confirm-password" class="password-input" />
+                    </div>
+                    <p class="warnM-password"></p>
+                    <button class="changePassBtn">Change</button>
+
+                  </div>
+                </div>-->
+            </div>
+            <h2>My venue</h2>
+            <div class="list-container">
+                <h1>Family Tennis Club</h1>
+                <p class="subtitle">Tennis venue</p>
+
+                <div class="day-block">
+                    <h2>10.04.2025</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>10:00–11:00</td><td>Yeldos Zharkynbekov</td><td>7000 &#8376;</td></tr>
+                            <tr><td>11:00–12:00</td><td>Yeldos Zharkynbekov</td><td>7000 &#8376;</td></tr>
+                            <tr><td>12:00–13:00</td><td>Yeldos Zharkynbekov</td><td>7000 &#8376;</td></tr>
+                            <tr class="free"><td>13:00–14:00</td><td colspan="2">FREE</td></tr>
+                            <tr class="free"><td>14:00–15:00</td><td colspan="2">FREE</td></tr>
+                            <tr><td>15:00–16:00</td><td>Alikhan Zhakenov</td><td>7000 &#8376;</td></tr>
+                            <tr><td>16:00–17:00</td><td>Alikhan Zhakenov</td><td>7000 &#8376;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="day-block">
+                    <h2>11.04.2025</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>10:00–11:00</td><td>Yeldos Zharkynbekov</td><td>7000 &#8376;</td></tr>
+                            <tr><td>11:00–12:00</td><td>Yeldos Zharkynbekov</td><td>7000 &#8376;</td></tr>
+                            <tr><td>12:00–13:00</td><td>Yeldos Zharkynbekov</td><td>7000 &#8376;</td></tr>
+                            <tr class="free"><td>13:00–14:00</td><td colspan="2">FREE</td></tr>
+                            <tr class="free"><td>14:00–15:00</td><td colspan="2">FREE</td></tr>
+                            <tr><td>15:00–16:00</td><td>Alikhan Zhakenov</td><td>7000 &#8376;</td></tr>
+                            <tr><td>16:00–17:00</td><td>Alikhan Zhakenov</td><td>7000 &#8376;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="detail">
+            <h2>Booking History</h2>
+         <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Venue Name</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tbody id="booking-table-body">
+                        <!-- Rows will be injected here -->
+                    </tbody>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="notifications">
+            <div class="notif-content">
+                <p class="notif-topic">Notifications</p>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+        </section>
+
+    {% include './footer.html' %}
+
+
+    <script src="{% static 'js/profilejava.js' %}" defer></script>
+</body>
+</html>
