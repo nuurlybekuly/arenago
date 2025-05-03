@@ -167,6 +167,7 @@ TIME_ZONE = 'Asia/Almaty'  # Adjust this to your actual local time zone
 USE_TZ = True
 
 
+ALLOWED_HOSTS = ['*']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
