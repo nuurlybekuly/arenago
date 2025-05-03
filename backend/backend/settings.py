@@ -11,22 +11,27 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=f=s8jtv4u2=k*r+!(4n*y5js&i+dvm367xiaw&l1k8*x@hk-v'
+# SECRET_KEY = 'django-insecure-=f=s8jtv4u2=k*r+!(4n*y5js&i+dvm367xiaw&l1k8*x@hk-v'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 DEBUG = True
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-TIME_ZONE = 'Asia/Almaty'
+# TIME_ZONE = 'Asia/Almaty'
+TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
+
 USE_TZ = True  # Ensure time zone is enabled
 
 LOGOUT_REDIRECT_URL = '/'  # Or wherever you want to redirect after logout
@@ -92,13 +97,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sport_venue',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5433',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME":     os.getenv("POSTGRES_DB"),
+        "USER":     os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST":     os.getenv("POSTGRES_HOST"),
+        "PORT":     os.getenv("POSTGRES_PORT", 5432),
     }
 }
 
@@ -144,9 +149,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React frontend URL
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
