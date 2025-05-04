@@ -111,6 +111,19 @@ header{
 .profile img{
     width: 30px;
 }
+.profile span{
+    color: white;
+    font-size: 1.2em;
+    border: 1px white solid;
+    border-radius: 10px;
+    padding: 20% 60%;
+    font-weight:bold;
+}
+.profile span:hover{
+    background-color: white;
+    color: #1E3A8A;
+    transition: 0.4s ease;
+}
 
 
 .profile button {
@@ -351,7 +364,7 @@ header{
     width: 12%;
     background-color: #1E3A8A;
     color: white;
-    font-size: 30px;
+    font-size: 100%;
     border: none;
     border-radius: 4px;
     border: darkorange 2px solid;
@@ -380,7 +393,7 @@ header{
     display: flex;
     flex-direction: column;
     animation: venuesAnimation 0.5s ease-in-out forwards;
-
+    padding-bottom: 3%
 }
 
 .venues-div{
@@ -396,7 +409,7 @@ header{
 
 }
 .venue-card:hover {
-    transform: scale(1.05);
+    transform: scale(0.98);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     filter: brightness(1.1);
     transition: 0.3s ease;
@@ -546,6 +559,18 @@ header{
     width: 22%;
     border-radius: 0%;
 }
+.carousel-img {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+.carousel-img.fade-out {
+    opacity: 0;
+}
+
+.right-div{
+    width: 40%;
+}
+
 .middle-div{
     height: 75%;
     width: 10%;
@@ -556,11 +581,13 @@ header{
 .middle-up , .middle-down{
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding-left: 10%;
 }
 .middle-up img,.middle-down img{
     width: 50%;
     padding: 5px;
+    border-radius: 10px
 }
 .right-div{
     width: 40%;
@@ -611,10 +638,29 @@ header{
     font-weight: bold;
 }
 
-.date{
-    border-radius: 10px;
-    padding: 5px 10px;
+.date {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid red;
+    background-color: lightgray; /* Add a default background */
+    color: black;
+    transition: all 0.3s; /* smooth animation */
 }
+
+.date:hover {
+    background-color: #1E3A8A;
+    color: white;
+}
+
+/* 👇 SUPER IMPORTANT: Active day even when hover */
+.date.active-day, .date.active-day:hover {
+    background-color: #1E3A8A;
+    color: white;
+}
+
+
 
 .time-slots {
     display: grid;
@@ -681,6 +727,8 @@ header{
 .total-price b{
     font-weight: bold;
 }
+
+
 
 /* Animation */
 
@@ -761,4 +809,34 @@ footer {
 
 .footer-rights {
     font-size: 12px;
+}
+.hamburger {
+    font-size: 30px;
+    cursor: pointer;
+    display: none; /* default hidden on desktop */
+}
+@media (max-width: 768px) {
+    /* On mobile... */
+
+    .hamburger {
+        display: block; /* show sandwich button */
+    }
+
+    .menu-content {
+        display: none; /* hide menu by default */
+        flex-direction: column;
+        gap: 10px;
+        background-color: white;
+        position: absolute;
+        top: 60px; /* push below the header */
+        right: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        z-index: 100;
+    }
+
+    .menu-content.active {
+        display: flex; /* show when active */
+    }
 }
