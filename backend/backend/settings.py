@@ -173,11 +173,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 TIME_ZONE = 'Asia/Almaty'  # Adjust this to your actual local time zone
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://arenago.kz",
-]
-
-
 ALLOWED_HOSTS = ['*']
 
 
