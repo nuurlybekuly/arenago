@@ -160,8 +160,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.User'
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
 
 # settings.py
 TIME_ZONE = 'Asia/Almaty'  # Adjust this to your actual local time zone
