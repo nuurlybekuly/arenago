@@ -28,6 +28,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = True
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'arenago.kz', '165.22.63.97']
 
 # TIME_ZONE = 'Asia/Almaty'
 TIME_ZONE = os.getenv("TIME_ZONE", "UTC")
@@ -166,6 +167,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 # settings.py
 TIME_ZONE = 'Asia/Almaty'  # Adjust this to your actual local time zone
 USE_TZ = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://arenago.kz",
+]
 
 
 ALLOWED_HOSTS = ['*']
