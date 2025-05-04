@@ -123,8 +123,8 @@ async function fetchAllUsers(){
     }
 }
 
-let nameh3 = document.querySelector('.name-h3')
-let usernameP = document.querySelector('.username-p')
+    let nameh3 = document.querySelector('.name-h3')
+    let usernameP = document.querySelector('.username-p')
 function userDisplay(){
     nameh3.textContent = userData.first_name + " " + userData.last_name
     usernameP.textContent = "@" + userData.username
@@ -156,9 +156,9 @@ function lnEdit(){
 }
 function usEdit(){
     if (us.value.length < 3){
-        warnMessage.style.color = "red"
-        warnMessage.textContent = "Username must contain at least 3 character"
-        return
+            warnMessage.style.color = "red"
+            warnMessage.textContent = "Username must contain at least 3 character"
+            return
     }else{
         console.log(allUsers.includes(us.value))
         if(allUsers.includes(us.value)){
@@ -177,42 +177,42 @@ function usEdit(){
 async function updateUserInfo() {
 
     if (warnMessage.textContent == "This username is valid" || warnMessage.textContent == ""){
-        const firstName = document.querySelector('.fn-input').value;
-        const lastName = document.querySelector('.ln-input').value;
-        const username = document.querySelector('.us-input').value;
-        const email = document.querySelector('.em-input').value;
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const firstName = document.querySelector('.fn-input').value;
+            const lastName = document.querySelector('.ln-input').value;
+            const username = document.querySelector('.us-input').value;
+            const email = document.querySelector('.em-input').value;
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-        try {
-            const response = await fetch('/profile/update-user/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                },
-                body: JSON.stringify({
-                    first_name: firstName,
-                    last_name: lastName,
-                    username: username,
-                    email: email
-                })
-            });
+            try {
+                const response = await fetch('/profile/update-user/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({
+                        first_name: firstName,
+                        last_name: lastName,
+                        username: username,
+                        email: email
+                    })
+                });
 
-            const result = await response.json();
-            console.log("krdi")
-            if (result.status === "success") {
+                const result = await response.json();
+                console.log("krdi")
+                if (result.status === "success") {
                 console.log("URA")
-                alert("User info updated!");
-            } else {
-                alert("вќЊ " + result.message);
+                    alert("User info updated!");
+                } else {
+                    alert("❌ " + result.message);
+                }
+            } catch (error) {
+                console.error("Update failed", error);
+                alert("❌ Something went wrong.");
             }
-        } catch (error) {
-            console.error("Update failed", error);
-            alert("вќЊ Something went wrong.");
-        }
 
-        editBtn.style.display = "block"
-        afterEdit.style.display = "none"
+                editBtn.style.display = "block"
+                afterEdit.style.display = "none"
     }else{
         return
     }
@@ -231,9 +231,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         const tbody = document.getElementById("booking-table-body");
 
         data.bookings.forEach(booking => {
-            const row = document.createElement("tr");
+                const row = document.createElement("tr");
 
-            row.innerHTML = `
+                row.innerHTML = `
                     <td>${booking.date}</td>
                     <td>${booking.time}</td>
                     <td><strong>${booking.venue}</strong></td>
@@ -244,8 +244,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                     </td>
                 `;
 
-            tbody.appendChild(row);
-        });
+                tbody.appendChild(row);
+            });
 
     }catch(error){
         console.log("Errof Fethcing")
@@ -271,7 +271,7 @@ async function showFavVenues(){
 
         data.venue_details.forEach(ven => {
             div.innerHTML +=
-                `
+            `
                 <div>
                     <img src="${ven.image}" alt="">
                     <div class="venue-detail">
@@ -284,19 +284,19 @@ async function showFavVenues(){
         })
 
     }catch{
-        console.log("Fav alynbady")
+           console.log("Fav alynbady")
     }
 }
 function addFav(ven_id){
     const csrfToken = getCookie("csrftoken");
 
     fetch(`/venues/add_favorite/${ven_id}/`, {
-        method: 'POST', // Use POST for secure submission
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRFToken': csrfToken, // Include CSRF token in header
-        },
-    })
+            method: 'POST', // Use POST for secure submission
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrfToken, // Include CSRF token in header
+            },
+        })
         .then(response => response.json())
         .then(data => {
 //            alert(data.message); // Show message based on the response from Django
@@ -319,22 +319,22 @@ function delFav(ven_id){
         img.style.marginRight = "2%"
         const csrfToken = getCookie("csrftoken");
 
-        console.log("Keldi")
+    console.log("Keldi")
 
-        fetch(`/venues/remove_favorite/${ven_id}/`, {
+    fetch(`/venues/remove_favorite/${ven_id}/`, {
             method: 'POST', // Use POST for secure submission
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRFToken': csrfToken, // Include CSRF token in header
             },
         })
-            .then(response => response.json())
-            .then(data => {
+        .then(response => response.json())
+        .then(data => {
 //            alert(data.message); // Show message based on the response from DjangoTemplates
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
 
@@ -355,7 +355,7 @@ function confirmLogout() {
 
 
 async function showClientsOfVenue(){
-    try {
+        try {
         const res = await fetch('/venues/get-owner-bookings/');
         const bookings = await res.json();
 
@@ -426,7 +426,7 @@ async function showCurrentNotif(){
             not.created_at = (timeAgo(not.created_at))
 
             notifContent.innerHTML +=
-                `
+            `
                 <div class="notif-card">
                     <div class="checked">
                         &#10004
@@ -445,19 +445,19 @@ async function showCurrentNotif(){
 }
 
 function timeAgo(dateStr) {
-    const now = new Date();
-    const past = new Date(dateStr);
-    const diffMs = now - past;
+  const now = new Date();
+  const past = new Date(dateStr);
+  const diffMs = now - past;
 
-    const seconds = Math.floor(diffMs / 1000);
-    const minutes = Math.floor(diffMs / 1000 / 60);
-    const hours = Math.floor(diffMs / 1000 / 60 / 60);
-    const days = Math.floor(diffMs / 1000 / 60 / 60 / 24);
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(diffMs / 1000 / 60);
+  const hours = Math.floor(diffMs / 1000 / 60 / 60);
+  const days = Math.floor(diffMs / 1000 / 60 / 60 / 24);
 
-    if (seconds < 60) return `${seconds} sec ago`;
-    if (minutes < 60) return `${minutes} min ago`;
-    if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-    return `${days} day${days !== 1 ? 's' : ''} ago`;
+  if (seconds < 60) return `${seconds} sec ago`;
+  if (minutes < 60) return `${minutes} min ago`;
+  if (hours < 24) return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+  return `${days} day${days !== 1 ? 's' : ''} ago`;
 }
 function getCookie(name) {
     let cookieValue = null;

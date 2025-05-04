@@ -145,6 +145,17 @@ function selectSlots(){
         })
     })
 }
+async function AvailableSlots(){
+    console.log("SLOOT")
+    try{
+        const res = await fetch("/api/bookings/")
+        const data = await res.json()
+        console.log(data)
+    }catch(error){
+        console.log("ALYNBADy")
+    }
+
+}
 
 function displayDetail(){
     const allCards = document.querySelectorAll('.venue-card');
@@ -193,6 +204,9 @@ function displayDetail(){
             `
             selectSlots()
             AddingFavoriteVenue(c.id)
+
+            AvailableSlots()
+            console.log("STEP TUR")
         })
     })
 }
