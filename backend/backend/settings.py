@@ -87,7 +87,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Add static files directory
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'users', 'static')  # 👈 Add static path
+    os.path.join(BASE_DIR, 'users', 'static'),
+    os.path.join(BASE_DIR, 'venues', 'static'),
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
@@ -159,8 +160,8 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.User'
 
 
-MEDIA_URL = '/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # settings.py
 TIME_ZONE = 'Asia/Almaty'  # Adjust this to your actual local time zone
