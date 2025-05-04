@@ -128,7 +128,7 @@ function getDaysOfSlots(){
 
     let daysInSelect = []
     document.querySelector('.date-row').innerHTML = ''
-        let until = 7 + (7-workingWeekDays.length);
+    let until = 7 + (7-workingWeekDays.length);
     console.log(until)
     for (let i = 0; i <= until; i++) {
         const nextDay = new Date(today);
@@ -208,11 +208,11 @@ async function AvailableSlots(venue_id){
 }
 
 function showAvailableSlots(data) {
-     let needVen = allVenues.find(v => v.id == venue_id)
-     console.log("NEED VENUE:",needVen)
-     let venueStart = needVen.start
-     let venueEnd = needVen.end
-     let workingDays = needVen.working_days
+    let needVen = allVenues.find(v => v.id == venue_id)
+    console.log("NEED VENUE:",needVen)
+    let venueStart = needVen.start
+    let venueEnd = needVen.end
+    let workingDays = needVen.working_days
 
 
 
@@ -276,7 +276,7 @@ function showAvailableSlots(data) {
     document.querySelector('.time-slots').innerHTML = ''
     availableSlots.forEach(eachSlot => {
         document.querySelector('.time-slots').innerHTML +=
-        `
+            `
             <button class="time-slot">${eachSlot}</button>
         `
     })
@@ -355,7 +355,7 @@ function displayDetail(){
             let c = allVenues.filter(crd => crd.id == card.id)[0]
 
             document.querySelector('.detail-content').innerHTML =
-            `
+                `
                 <div class="left-div">
                     <img class="carousel-img" src="${c.images[0]}" alt="">
 
@@ -387,7 +387,7 @@ function displayDetail(){
 
             priceEach = c.pricePerHour
             venueName = c.name
-                        venue_id = c.id
+            venue_id = c.id
             AvailableSlots(card.id)
             console.log("STEP TUR")
 
@@ -475,7 +475,7 @@ document.querySelector(".book-btn").addEventListener("click", () => {
 
     // After 2 seconds, fade out and redirect
     setTimeout((e) => {
-    e.preventDefault();
+        e.preventDefault();
         confirmationBox.style.opacity = "0"; // Fade out effect
         body.classList.remove("blurred");
 
@@ -504,18 +504,18 @@ sportBtn.addEventListener('mouseout', ()=>{
 
 function selectSport(){
     otherSport.forEach(element => {
-    element.addEventListener('click', ()=>{
-        filterByType(element.textContent)
-        document.querySelector('.curr-sport').innerHTML = `
+        element.addEventListener('click', ()=>{
+            filterByType(element.textContent)
+            document.querySelector('.curr-sport').innerHTML = `
         <img src="{% static 'images/footballSign.png' %}" alt="">
                                     ${element.textContent}
         `
-        document.querySelector('.other-sports').style.display = "none"
-        if(element.textContent == "All sports"){
-            fetchVenues()
-        }
-    })
-});
+            document.querySelector('.other-sports').style.display = "none"
+            if(element.textContent == "All sports"){
+                fetchVenues()
+            }
+        })
+    });
 }
 
 
@@ -525,7 +525,7 @@ function filterByType(needType){
 }
 
 function filterVenues(){
-        console.log("KIRDI")
+    console.log("KIRDI")
     let fromValue = document.querySelector('.from-div input').value
     let toValue = document.querySelector('.to-div input').value
 
@@ -569,12 +569,12 @@ async function AddFavVenue(venue_id){
     const csrfToken = getCookie("csrftoken");
 
     fetch(`/venues/add_favorite/${venue_id}/`, {
-            method: 'POST', // Use POST for secure submission
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': csrfToken, // Include CSRF token in header
-            },
-        })
+        method: 'POST', // Use POST for secure submission
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrfToken, // Include CSRF token in header
+        },
+    })
         .then(response => response.json())
         .then(data => {
 //            alert(data.message); // Show message based on the response from Django
@@ -584,15 +584,15 @@ async function AddFavVenue(venue_id){
         });
 }
 async function removeFavVenue(venue_id){
-const csrfToken = getCookie("csrftoken");
+    const csrfToken = getCookie("csrftoken");
 
     fetch(`/venues/remove_favorite/${venue_id}/`, {
-            method: 'POST', // Use POST for secure submission
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': csrfToken, // Include CSRF token in header
-            },
-        })
+        method: 'POST', // Use POST for secure submission
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrfToken, // Include CSRF token in header
+        },
+    })
         .then(response => response.json())
         .then(data => {
 //            alert(data.message); // Show message based on the response from DjangoTemplates
