@@ -61,9 +61,9 @@ function checkPassword(){
     }
 }
 
-const signupBtn = document.querySelector('.signup-button')
-
-signupBtn.addEventListener('click',()=>{
-event.preventDefault();
-    document.querySelector('.verification-container').style.display = "block"
-})
+//const signupBtn = document.querySelector('.signup-button')
+//
+//signupBtn.addEventListener('click',()=>{
+//event.preventDefault();
+//    document.querySelector('.verification-container').style.display = "block"
+//})
