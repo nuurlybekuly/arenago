@@ -31,6 +31,10 @@ body{
     font-size: 70px;
     padding-left: 10px;
 }
+.left-content a{
+    text-decoration: none;
+    color:white;
+}
 .left-content .arrow-back:hover{
     color: #1E3A8A;
     transition: 0.3s;

@@ -25,11 +25,10 @@
                 <li><img src="{% static 'images/history.png' %}" alt="History"> History</li>
                 <li><img src="{% static 'images/setting.png' %}" alt="Setting"> Setting</li>
                 <li><img src="{% static 'images/not.png' %}" alt="Notifications"> Notifications</li>
-                <li onclick="showLogoutPopup()" style="color: red; font-weight: bold;">
-                    <a href="#"  style="color: red; font-weight: bold; text-decoration: none;">
-                        <img src="{% static 'images/logout.png' %}" alt="" style="vertical-align: middle; margin-right: 8px;">
+                <li onclick="showLogoutPopup(); event.preventDefault();" style="color: red; font-weight: bold;">
+
+                        <img id="logout_img" src="{% static 'images/logout.png' %}" alt="Logout" style="vertical-align: middle; margin-right: 8px;">
                         Log Out
-                    </a>
                 </li>
 
                 <!-- Logout confirmation modal -->
@@ -38,7 +37,7 @@
                         <p>Are you sure you want to log out?</p>
                         {% csrf_token %}
                         <button type="submit">Yes</button>
-                        <button onclick="hideLogoutPopup()">Cancel</button>
+                        <button type="button" onclick="hideLogoutPopup()">Cancel</button>
                     </form>
                 </div>
             </ul>

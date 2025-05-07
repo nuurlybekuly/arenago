@@ -12,6 +12,10 @@ const page5 = document.querySelector('.notifications')
 
 navButtons.forEach(navButton => {
     navButton.addEventListener('click', ()=> {
+//        if(navButton.querySelector('img').getAttribute('alt') == "Logout"){
+//            console.log("It works");
+//        }
+//        console.log("This js")
         currNav = document.querySelector('.active')
         currNav.querySelector('img').src = currNav.querySelector('img').src.slice(0, -9) + ".png"
         currNav.classList.remove('active')
@@ -347,6 +351,7 @@ function showLogoutPopup() {
 
 function hideLogoutPopup() {
     document.getElementById("logoutPopup").style.display = "none";
+
 }
 
 function confirmLogout() {

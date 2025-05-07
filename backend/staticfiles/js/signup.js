@@ -7,15 +7,15 @@ closedEyes.forEach(closedEye => {
         console.log("joined");
         console.log(closedEye.src);
 
-        if(closedEye.src == includes("closedEyeSign.png")){
+        if(closedEye.src.slice(-17) == "closedEyeSign.png"){
             closedEyes.forEach(eye => {
-                eye.src = "../images/openedEyeSign.png"
+                eye.src = "../static/images/openedEyeSign.png"
             })
             passwordInput.type = "text"
             passwordCInput.type = "text"
         }else{
             closedEyes.forEach(eye => {
-                eye.src = "../images/closedEyeSign.png"
+                eye.src = "../static/images/closedEyeSign.png"
             })
             passwordInput.type = "password"
             passwordCInput.type = "password"

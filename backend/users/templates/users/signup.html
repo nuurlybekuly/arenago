@@ -13,7 +13,7 @@
     <div class="container">
         <div class="left-side">
             <div class="left-content">
-                <div class="arrow-back"><</div>
+                <a href="{% url 'home_page' %}"><div class="arrow-back"><</div></a>
                 <h1>Booking with us</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis maximus nunc, ac rhoncus odio congue quis. Sed ac semper orci, eu porttitor lacus.</p>
                 <img class="pitch-in-login" src="{% static 'images/pitchInLogin.png' %}" alt="">
@@ -27,11 +27,11 @@
                       {% csrf_token %}
                      <div>
                         <h2>Sign Up</h2>
-                          {% if messages %}
-                                {% for message in messages %}
-                                    <p style="color: red;" class="warn-wrong">{{ message }}</p>
-                                {% endfor %}
-                          {% endif %}
+<!--                          {% if messages %}-->
+<!--                                {% for message in messages %}-->
+                                    <p style="color: red;" class="warn-wrong"></p>
+<!--                                {% endfor %}-->
+<!--                          {% endif %}-->
                      </div>
                     <div class="names-container">
                         <div class="first-name-div">

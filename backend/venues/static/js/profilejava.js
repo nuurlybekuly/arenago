@@ -12,12 +12,16 @@ const page5 = document.querySelector('.notifications')
 
 navButtons.forEach(navButton => {
     navButton.addEventListener('click', ()=> {
+         if(navButton.querySelector('img').getAttribute('alt') == "Logout"){
+            return
+        }
+        console.log("This js")
         currNav = document.querySelector('.active')
         currNav.querySelector('img').src = currNav.querySelector('img').src.slice(0, -9) + ".png"
         currNav.classList.remove('active')
 
         navButton.classList.add('active')
-        console.log(navButton.querySelector('img').getAttribute('alt'));
+//        console.log(navButton.querySelector('img').getAttribute('alt'));
 
         navButton.querySelector('img').src = navButton.querySelector('img').src.slice(0, -4) + "Black.png"
         if(navButton.querySelector('img').getAttribute('alt') == "User Info"){
