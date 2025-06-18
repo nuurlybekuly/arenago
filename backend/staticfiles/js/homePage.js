@@ -4,6 +4,7 @@ const detailCon = document.querySelector('.detail-container')
 const headMid = document.querySelector('.head-middle')
 const headDown = document.querySelector('.head-down')
 const venCon = document.querySelector(".venues-container")
+const reviewsCard = document.querySelector(".reviews-card")
 
 let favVenues;
 let venue_id;
@@ -349,8 +350,10 @@ function displayDetail(){
             headDown.style.display = "none"
             detailCon.style.display = "block"
             venCon.style.display = "none"
+            reviewsCard.style.display = "flex"
             document.querySelector('header').style.height = "15vh"
             document.querySelector('.head-up').style.height = "90%"
+
 
             let c = allVenues.filter(crd => crd.id == card.id)[0]
 
@@ -506,8 +509,7 @@ function selectSport(){
     otherSport.forEach(element => {
         element.addEventListener('click', ()=>{
             filterByType(element.textContent)
-            document.querySelector('.curr-sport').innerHTML = `
-        <img src="{% static 'images/footballSign.png' %}" alt="">
+            document.querySelector('#now_sport').innerHTML = `
                                     ${element.textContent}
         `
             document.querySelector('.other-sports').style.display = "none"
@@ -675,7 +677,8 @@ function getCookie(name) {
 window.addEventListener("beforeunload", function () {
     navigator.sendBeacon("/logout/");
 });
-function toggleMenu() {
-    const menu = document.querySelector('.menu-content');
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
 }

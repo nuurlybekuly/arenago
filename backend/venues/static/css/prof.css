@@ -117,7 +117,7 @@ header{
 /* PROFILE */
 
 .user-profile{
-    width: 80%;
+    width: 100%;
     display: flex;
 }
 
@@ -613,6 +613,7 @@ header{
 }
 .detail tr:hover {
     background-color: #f1f1f1;
+    cursor: pointer;
 }
 .detail .status {
     display: flex;
@@ -641,8 +642,240 @@ header{
     border-radius: 5px;
 }
 
+.booking-history-page {
+    width: 70%;
+    margin: 0 auto;
+    padding: 32px 0;
+    display: none;
+}
 
+.booking-history-title {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 24px;
+    color: #222;
+    letter-spacing: 0.5px;
+}
 
+.booking-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px 0 rgba(30,58,138,0.08);
+    padding: 40px 48px 40px 48px;
+    width: 70%;
+    margin: 32px auto;
+    min-width: 320px;
+    max-width: 700px;
+    transition: box-shadow 0.2s;
+}
+
+.booking-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.back-btn {
+    font-weight: bold;
+    font-size: 1.7rem;
+    color: #1E3A8A;
+    margin-bottom: 10px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f3f6fa;
+    box-shadow: 0 2px 8px rgba(30,58,138,0.04);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.back-btn:hover {
+    cursor: pointer;
+    background: #e6ecfa;
+    box-shadow: 0 4px 16px rgba(30,58,138,0.10);
+}
+
+.venue-label {
+    color: #b0b0b0;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+    letter-spacing: 0.5px;
+}
+
+.venue-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #1E3A8A;
+    letter-spacing: 0.5px;
+}
+
+.venue-address,
+.venue-datetime,
+.venue-total,
+.venue-status {
+    font-size: 1.13rem;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.label {
+    color: #888;
+    font-size: 1.05rem;
+    margin-right: 4px;
+    min-width: 90px;
+    display: inline-block;
+}
+
+.value {
+    color: #222;
+    font-weight: 500;
+}
+
+.total-price {
+    color: #1E3A8A;
+    font-weight: bold;
+    font-size: 1.18rem;
+    margin-left: 4px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #ffc107;
+    border-radius: 50%;
+    margin-right: 4px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px #ffc107;
+}
+
+.status-dot.orange {
+    background: #ffc107;
+    box-shadow: 0 0 0 1px #ffc107;
+}
+
+.status-dot.green {
+    background: #1bbf3a;
+    box-shadow: 0 0 0 1px #1bbf3a;
+}
+
+.status-dot.red {
+    background: #e53935;
+    box-shadow: 0 0 0 1px #e53935;
+}
+
+@media (max-width: 900px) {
+    .booking-card {
+        width: 95%;
+        padding: 24px 8vw;
+    }
+}
+@media (max-width: 600px) {
+    .booking-card {
+        padding: 18px 2vw;
+        min-width: unset;
+    }
+    .venue-name {
+        font-size: 1.3rem;
+    }
+}
+
+.cancel-booking-btn {
+    margin-top: 16px;
+    background: #e53935;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cancel-booking-btn:hover {
+    background: #b71c1c;
+}
+.venue-rating-form {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.venue-rating-title {
+    color: #1E3A8A;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.venue-stars {
+    margin-bottom: 24px;
+}
+.star {
+    font-size: 2.6rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+    margin: 0 4px;
+}
+.star.selected,
+.star.hovered {
+    color: orange;
+}
+
+.venue-feedback-label {
+    width: 70%;
+    text-align: center;
+    margin: 0 0 6px 13%;
+    color: #444;
+    font-size: 1.05rem;
+}
+
+.venue-feedback-input {
+    width: 75%;
+    min-width: 220px;
+    max-width: 600px;
+    height: 70px;
+    border: none;
+    border-radius: 16px;
+    background: #f4f4f4;
+    font-size: 1.1rem;
+    padding: 14px;
+    margin-bottom: 18px;
+    resize: vertical;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.07);
+    outline: none;
+}
+
+.venue-feedback-send {
+    display: block;
+    margin: 0 auto;
+    background: #1E3A8A;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 32px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.venue-feedback-send:hover {
+    background: #274bb6;
+}
 
 
 /* FOOTER */
@@ -687,4 +920,46 @@ footer {
 
 .footer-rights {
     font-size: 12px;
+}
+
+.toast-notification {
+    display: flex;
+    font-size: 40px;
+    position: fixed;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, 0) scale(0.95);
+    background: #1E3A8A;
+    color: #fff;
+    padding: 18px 36px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    z-index: 99999;
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+    pointer-events: none;
+}
+
+.toast-notification.show {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+    animation: toastBounceIn 0.5s;
+}
+
+@keyframes toastBounceIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 40%) scale(0.9);
+    }
+    60% {
+        opacity: 1;
+        transform: translate(-50%, -45%) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -40%) scale(1);
+    }
 }

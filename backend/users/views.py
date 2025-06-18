@@ -8,10 +8,6 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model  # ✅ Use this instead of User
-
-
-
-
 User = get_user_model()  # ✅ Get your custom User model
 
 

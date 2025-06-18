@@ -113,3 +113,16 @@ class Booking(models.Model):
     def is_available(cls, venue_id, start_time, end_time):
         """Check if a time slot is available for a venue"""
         return not cls.objects.filter(venue_id=venue_id, start_time=start_time, end_time=end_time).exists()
+
+
+class Rating(models.Model):
+    rating_id = models.AutoField(primary_key=True)
+    venue_id = models.IntegerField()  # Foreign key reference stored as integer
+    rating = models.PositiveSmallIntegerField()  # Out of 5
+    feedback = models.TextField(blank=True)
+    user_id = models.IntegerField()  # Storing user ID as integer
+    username = models.CharField(max_length=255, default="Anonym")  # Username of the rater
+    date = models.DateTimeField(auto_now_add=True)  # Date when the rating was given
+
+    def __str__(self):
+        return f"Rating {self.rating} for venue {self.venue_id} by {self.username} on {self.date.strftime('%Y-%m-%d %H:%M')}"

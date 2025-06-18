@@ -3,6 +3,7 @@ const navButtons = document.querySelectorAll('.menu li')
 // SWITCH PAGES
 let allUsers;
 let userData;
+let bookingData;
 const page1 = document.querySelector('.user-info')
 const page2 = document.querySelector('.fav')
 const page3 = document.querySelector('.detail')
@@ -10,18 +11,23 @@ const page4 = document.querySelector('.settingUser')
 const page5 = document.querySelector('.notifications')
 
 
+
+
 navButtons.forEach(navButton => {
     navButton.addEventListener('click', ()=> {
-//        if(navButton.querySelector('img').getAttribute('alt') == "Logout"){
-//            console.log("It works");
-//        }
-//        console.log("This js")
+         if(navButton.querySelector('img').getAttribute('alt') == "Logout"){
+            return
+        }
+        const bookingKoi = document.querySelector('.booking-history-page')
+        bookingKoi.style.display = "none";
+
+        console.log("This js")
         currNav = document.querySelector('.active')
         currNav.querySelector('img').src = currNav.querySelector('img').src.slice(0, -9) + ".png"
         currNav.classList.remove('active')
 
         navButton.classList.add('active')
-        console.log(navButton.querySelector('img').getAttribute('alt'));
+//        console.log(navButton.querySelector('img').getAttribute('alt'));
 
         navButton.querySelector('img').src = navButton.querySelector('img').src.slice(0, -4) + "Black.png"
         if(navButton.querySelector('img').getAttribute('alt') == "User Info"){
@@ -43,6 +49,7 @@ navButtons.forEach(navButton => {
             page3.style.display = "block"
             page4.style.display = "none"
             page5.style.display = "none"
+
         }else if(navButton.querySelector('img').getAttribute('alt') == "Setting"){
             page1.style.display = "none"
             page2.style.display = "none"
@@ -230,12 +237,16 @@ window.addEventListener("beforeunload", function () {
 document.addEventListener("DOMContentLoaded", async function () {
     try{
         const res = await fetch("/venues/api/user-bookings/")
-        const data = await res.json();
-        console.log("bookings",data)
+        bookingData = await res.json();
+        console.log("bookings",bookingData)
         const tbody = document.getElementById("booking-table-body");
 
-        data.bookings.forEach(booking => {
+
+
+        bookingData.bookings.forEach(booking => {
                 const row = document.createElement("tr");
+                row.classList.add("each-booking");
+                row.id = `${booking.id}`
 
                 row.innerHTML = `
                     <td>${booking.date}</td>
@@ -254,8 +265,235 @@ document.addEventListener("DOMContentLoaded", async function () {
     }catch(error){
         console.log("Errof Fethcing")
     }
+    monitorClickBooking()
 });
 
+
+function monitorClickBooking(){
+    const allBookings = document.querySelectorAll('.each-booking')
+    allBookings.forEach(booking_row => {
+        booking_row.addEventListener('click', ()=> {
+            page3.style.display = 'none';
+            let curr_id = booking_row.id;
+            bookingData.bookings.forEach(searchBooking => {
+                if(searchBooking.id == curr_id){
+
+                    if(searchBooking.status_text == 'Ended'){
+                        const bookingHP = document.querySelector('.booking-history-page')
+                        bookingHP.style.display = "flex";
+                        bookingHP.style.flexDirection = "column";
+                        bookingHP.innerHTML = `
+                                <div class="booking-card">
+                                    <div class="booking-card-details">
+                                        <div class="back-btn"><</div>
+                                        <div class="venue-label">Venue name</div>
+                                        <div class="venue-name">${searchBooking.venue}</div>
+                                        <div class="venue-address">
+                                            <span class="label">Address:</span>
+                                            <span class="value">${searchBooking.venue}</span>
+                                        </div>
+                                        <div class="venue-datetime">
+                                            <span class="label">Date &amp; time:</span>
+                                            <span class="value">${searchBooking.time}</span>
+                                        </div>
+                                        <div class="venue-total">
+                                            <span class="label">Total:</span>
+                                            <span class="value total-price">${searchBooking.price}</span>
+                                        </div>
+                                        <div class="venue-status">
+                                            <span class="label">Status:</span>
+                                            <span class="status"><span class="status-dot orange"></span>${searchBooking.status_text}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="venue-rating-form">
+                                    <div class="venue-rating-title">How do you rate this venue?</div>
+                                    <div class="venue-stars">
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                        <span class="star">&#9733;</span>
+                                    </div>
+                                    <div class="venue-feedback-label">Write feedback</div>
+                                    <textarea class="venue-feedback-input" rows="3"></textarea>
+                                    <button class="venue-feedback-send">Send</button>
+                                </div>
+                        `
+                        monitorRating()
+                        document.querySelector('.venue-feedback-send').addEventListener('click', async function() {
+                            // Get the selected rating
+                            const stars = document.querySelectorAll('.venue-stars .star');
+                            let rating = 0;
+                            stars.forEach((star, idx) => {
+                                if (star.classList.contains('selected')) {
+                                    rating = idx + 1;
+                                }
+                            });
+
+                            // Get the feedback text
+                            const feedback = document.querySelector('.venue-feedback-input').value;
+
+                            // Get other details (you may need to adjust these based on your data structure)
+                            const venue_id = searchBooking.venue_id; // Make sure this is available in your searchBooking object
+
+                            // Call the async function to send data
+                            await sendRating({venue_id, rating, feedback});
+                        });
+
+                        document.querySelector('.back-btn').addEventListener('click', ()=> {
+                            page3.style.display = 'block';
+                            bookingHP.style.display = 'none';
+                        })
+                    }else{
+                        const bookingHP = document.querySelector('.booking-history-page')
+                        bookingHP.style.display = "flex";
+                        bookingHP.style.flexDirection = "column";
+                        bookingHP.innerHTML = `
+                                <div class="booking-card">
+                                    <div class="booking-card-details">
+                                        <div class="back-btn"><</div>
+                                        <div class="venue-label">Venue name</div>
+                                        <div class="venue-name">${searchBooking.venue}</div>
+                                        <div class="venue-address">
+                                            <span class="label">Address:</span>
+                                            <span class="value">${searchBooking.venue}</span>
+                                        </div>
+                                        <div class="venue-datetime">
+                                            <span class="label">Date &amp; time:</span>
+                                            <span class="value">${searchBooking.time}</span>
+                                        </div>
+                                        <div class="venue-total">
+                                            <span class="label">Total:</span>
+                                            <span class="value total-price">${searchBooking.price}</span>
+                                        </div>
+                                        <div class="venue-status">
+                                            <span class="label">Status:</span>
+                                            <span class="status-active"><span class="status-dot"></span>${searchBooking.status_text}</span>
+                                        </div>
+                                        <button class="cancel-booking-btn">Cancel booking</button>
+                                    </div>
+                                </div>
+                        `
+                        document.querySelector('.cancel-booking-btn').addEventListener('click', ()=> {
+                            cancelBooking(curr_id)
+                        })
+
+                        document.querySelector('.back-btn').addEventListener('click', ()=> {
+                            page3.style.display = 'block';
+                            bookingHP.style.display = 'none';
+                        })
+                    }
+                    }
+
+
+            })
+
+        })
+    })
+}
+
+async function sendRating({venue_id, rating, feedback}) {
+    try {
+        const response = await fetch('/venues/add-rating/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: `venue_id=${encodeURIComponent(venue_id)}&rating=${encodeURIComponent(rating)}&feedback=${encodeURIComponent(feedback)}`
+        });
+        const data = await response.json();
+        if (data.success) {
+            showToastAndReload("Thank you for your feedback!");
+        } else {
+            alert(data.error)
+        }
+    } catch (error) {
+        alert(data.error)
+    }
+}
+
+async function cancelBooking(current_booking_id) {
+    try {
+        const response = await fetch('/venues/cancel-booking/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: 'booking_id=' + encodeURIComponent(current_booking_id)
+        });
+        const data = await response.json();
+        if (data.success) {
+            showToastAndReload("Booking successfully canceled");
+        } else {
+            showToastAndReload("Error: " + data.error);
+        }
+    } catch (error) {
+        showToastAndReload("An error occurred: " + error);
+    }
+}
+
+function monitorRating(){
+    const stars = document.querySelectorAll('.venue-stars .star');
+    let selectedRating = 0;
+
+    stars.forEach((star, idx) => {
+        // Click event: set rating
+        star.addEventListener('click', () => {
+            selectedRating = idx + 1;
+            updateStars();
+        });
+
+        // Mouseover: highlight up to hovered star
+        star.addEventListener('mouseover', () => {
+            highlightStars(idx + 1);
+        });
+
+        // Mouseout: reset to selected rating
+        star.addEventListener('mouseout', () => {
+            updateStars();
+        });
+    });
+
+    function updateStars() {
+        stars.forEach((star, i) => {
+            if (i < selectedRating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+    }
+
+    function highlightStars(rating) {
+        stars.forEach((star, i) => {
+            if (i < rating) {
+                star.classList.add('hovered');
+            } else {
+                star.classList.remove('hovered');
+            }
+        });
+    }
+
+    // Remove hover effect when not hovering
+    document.querySelector('.venue-stars').addEventListener('mouseleave', () => {
+        stars.forEach(star => star.classList.remove('hovered'));
+    });
+}
+
+
+function showToastAndReload(message) {
+    const toast = document.getElementById('toast-notification');
+    toast.textContent = message;
+    toast.classList.add('show');
+    window.location.reload();
+    setTimeout(() => {
+        toast.classList.remove('show');
+
+    }, 2000); // Show for 2 seconds
+}
 
 async function showFavVenues(){
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
@@ -351,7 +589,6 @@ function showLogoutPopup() {
 
 function hideLogoutPopup() {
     document.getElementById("logoutPopup").style.display = "none";
-
 }
 
 function confirmLogout() {

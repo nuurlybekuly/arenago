@@ -15,7 +15,47 @@ from django.http import JsonResponse
 import json
 from datetime import datetime
 from .models import Booking
+from .models import Rating
 
+def get_reviews(request):
+    venue_id = request.GET.get('venue_id')
+    if venue_id:
+        ratings = Rating.objects.filter(venue_id=venue_id).order_by('-rating_id')
+    else:
+        ratings = Rating.objects.all().order_by('-rating_id')
+    data = []
+    for r in ratings:
+        data.append({
+            "rating_id": r.rating_id,
+            "venue_id": r.venue_id,
+            "rating": r.rating,
+            "feedback": r.feedback,
+            "user_id": r.user_id,
+            "username": r.username,
+            "date": r.date.strftime('%Y-%m-%d'),  # Format as string for JSON
+        })
+    return JsonResponse({"reviews": data})
+
+@csrf_exempt  # Only for testing! Use proper CSRF handling in production.
+def add_rating(request):
+    if request.method == "POST":
+        venue_id = request.POST.get("venue_id")
+        rating = request.POST.get("rating")
+        feedback = request.POST.get("feedback")
+        user = request.user
+        try:
+            Rating.objects.create(
+                venue_id=venue_id,
+                rating=rating,
+                feedback=feedback,
+                user_id=user.id,
+                username=user.username  # Add username here
+                # date will be set automatically by auto_now_add
+            )
+            return JsonResponse({"success": True})
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+    return JsonResponse({"success": False, "error": "Invalid request"})
 
 
 @login_required
@@ -79,6 +119,8 @@ def user_bookings_api(request):
             status_color = "green"
 
         booking_list.append({
+            "id": booking.id,
+            "venue_id": booking.venue_id,
             "date": adjusted_start.strftime("%d.%m.%Y"),
             "time": f"{adjusted_start.strftime('%H:%M')}-{adjusted_end.strftime('%H:%M')}",
             "venue": venue.name,
@@ -312,3 +354,15 @@ def get_favorite_venues_profile(request):
 
     # Return the venue details as a JSON response
     return JsonResponse({'venue_details': venue_details})
+
+
+def cancel_booking(request):
+    if request.method == "POST":
+        booking_id = request.POST.get("booking_id")
+        try:
+            booking = Booking.objects.get(id=booking_id)
+            booking.delete()
+            return JsonResponse({"success": True})
+        except Booking.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Booking not found"})
+    return JsonResponse({"success": False, "error": "Invalid request"})

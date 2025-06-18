@@ -2,7 +2,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 from .views import add_venue, venue_list, venue_detail, home_page, profile_view, create_booking, \
     user_bookings_api, add_favorite, remove_favorite, get_favorite_venues, get_favorite_venues_profile, \
-    get_owner_bookings, user_notifications
+    get_owner_bookings, user_notifications, cancel_booking, add_rating, get_reviews
 from .views import venue_list_api,get_bookings
 
 
@@ -14,7 +14,9 @@ urlpatterns = [
     path('api/bookings/<int:venue_id>/', get_bookings, name='get_bookings'),
     path('book/', create_booking, name='create_booking'),
     path('<int:venue_id>/', venue_detail, name='venue_detail'),  # View venue details
-
+    path('cancel-booking/', cancel_booking, name='cancel_booking'),
+    path('add-rating/', add_rating, name='add_rating'),
+    path('get-reviews/', get_reviews, name='get_reviews'),
 
     path("profile/", profile_view, name="profile"),
     # path('', home_page, name='home_page')

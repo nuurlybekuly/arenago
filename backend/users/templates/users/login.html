@@ -25,11 +25,9 @@
                      {% csrf_token %}
                     <div>
                         <h2>Log In</h2>
-                        {% if messages %}
-                        {% for message in messages %}
-                            <p style="color: red;">{{ message }}</p>
-                        {% endfor %}
-                        {% endif %}
+
+                            <p class="warnInvalidM" style="color: red;"></p>
+
                     </div>
                     <label >Email address or username</label>
                     <input class="email-input" type="text" name="username" placeholder="Email or Username" required>
