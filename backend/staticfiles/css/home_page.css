@@ -511,7 +511,7 @@ header{
 
 .detail-container{
     width: 80%;
-    height: 110vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -596,6 +596,7 @@ header{
 /* SLOT */
 .detail-container{
     display: none;
+
 }
 .slot-div{
     display: flex;
@@ -623,6 +624,7 @@ header{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     width: 70%;
+    margin-bottom: 10px;
 }
 
 .schedule-title {
@@ -643,7 +645,7 @@ header{
     padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
-    border: 1px solid red;
+    border: 1px solid #1E3A8A;
     background-color: lightgray; /* Add a default background */
     color: black;
     transition: all 0.3s; /* smooth animation */
@@ -654,11 +656,11 @@ header{
     color: white;
 }
 
-/* 👇 SUPER IMPORTANT: Active day even when hover */
-.date.active-day, .date.active-day:hover {
-    background-color: #1E3A8A;
-    color: white;
-}
+  .date.selected {
+      background-color: orange !important;
+      color: white !important;
+      border-radius: 5px !important;
+  }
 
 
 
@@ -733,7 +735,7 @@ header{
 
 .reviews-card {
     width: 80%;
-    margin: 30px auto;
+    margin: 20px;
     background: #fff;
     border-radius: 24px;
     box-shadow: 0 2px 16px 0 rgba(0,0,0,0.13);
@@ -836,6 +838,33 @@ header{
     text-decoration: underline;
 }
 
+.star {
+    font-size: 2rem;
+    color: #ddd;
+    position: relative;
+    display: inline-block;
+}
+.star.full {
+    color: orange;
+}
+.star.half {
+    color: #ddd;
+    position: relative;
+}
+.star.half::before {
+    content: '★';
+    color: orange;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    z-index: 1;
+    clip-path: inset(0 0% 0 0); /* Only left 10% is orange */
+    pointer-events: none;
+}
 
 
 /* Animation */
@@ -920,4 +949,5 @@ footer {
 
 .footer-rights {
     font-size: 12px;
+}
 }

@@ -414,7 +414,7 @@ async function getReviews(currentVenueId){
             totalRating += eachR.rating
         })
         let realRating;
-        if(realRating < 6){
+        if(allReviews.length < 1){
             realRating = totalRating / allReviews.length;
         }else{
             realRating = 5.0
