@@ -1,4 +1,5 @@
 const navButtons = document.querySelectorAll('.menu li')
+let allVenues;
 
 // SWITCH PAGES
 let allUsers;
@@ -185,6 +186,28 @@ function usEdit(){
     warnMessage.style.color = "green"
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchVenues()
+});
+
+
+async function fetchVenues(){
+    console.log("JOINED")
+    try {
+        let response = await fetch("/venues/api/venues/")
+
+        let data = await response.json()
+
+        allVenues = data.venues
+
+        console.log("VENULAR", allVenues)
+
+    } catch (error) {
+        console.log(error);
+    }
+    console.log("all venues", allVenues)
+}
+
 async function updateUserInfo() {
 
     if (warnMessage.textContent == "This username is valid" || warnMessage.textContent == ""){
@@ -276,8 +299,14 @@ function monitorClickBooking(){
             page3.style.display = 'none';
             let curr_id = booking_row.id;
             bookingData.bookings.forEach(searchBooking => {
+                let curr_address;
                 if(searchBooking.id == curr_id){
-
+                    allVenues.forEach(cv => {
+                        if(cv.id == searchBooking.venue_id){
+                            curr_address = cv.location;
+                        }
+                    })
+                    console.log("Address", curr_address)
                     if(searchBooking.status_text == 'Ended'){
                         const bookingHP = document.querySelector('.booking-history-page')
                         bookingHP.style.display = "flex";
@@ -290,7 +319,7 @@ function monitorClickBooking(){
                                         <div class="venue-name">${searchBooking.venue}</div>
                                         <div class="venue-address">
                                             <span class="label">Address:</span>
-                                            <span class="value">${searchBooking.venue}</span>
+                                            <span class="value">${curr_address}</span>
                                         </div>
                                         <div class="venue-datetime">
                                             <span class="label">Date &amp; time:</span>
@@ -315,8 +344,7 @@ function monitorClickBooking(){
                                         <span class="star">&#9733;</span>
                                         <span class="star">&#9733;</span>
                                     </div>
-                                    <div class="venue-feedback-label">Write feedback</div>
-                                    <textarea class="venue-feedback-input" rows="3"></textarea>
+                                    <textarea class="venue-feedback-input" rows="3" placeholder = "Write feedback here"></textarea>
                                     <button class="venue-feedback-send">Send</button>
                                 </div>
                         `
@@ -369,7 +397,7 @@ function monitorClickBooking(){
                                         </div>
                                         <div class="venue-status">
                                             <span class="label">Status:</span>
-                                            <span class="status-active"><span class="status-dot"></span>${searchBooking.status_text}</span>
+                                            <span class="status-active"><span class="status-dot green"></span>${searchBooking.status_text}</span>
                                         </div>
                                         <button class="cancel-booking-btn">Cancel booking</button>
                                     </div>
@@ -394,6 +422,7 @@ function monitorClickBooking(){
 }
 
 async function sendRating({venue_id, rating, feedback}) {
+    document.querySelector('.venue-feedback-send').textContent = 'Sending...'
     try {
         const response = await fetch('/venues/add-rating/', {
             method: 'POST',
@@ -406,6 +435,7 @@ async function sendRating({venue_id, rating, feedback}) {
         const data = await response.json();
         if (data.success) {
             showToastAndReload("Thank you for your feedback!");
+            window.location.href = "/";
         } else {
             alert(data.error)
         }
@@ -415,7 +445,9 @@ async function sendRating({venue_id, rating, feedback}) {
 }
 
 async function cancelBooking(current_booking_id) {
+    document.querySelector('.cancel-booking-btn').textContent = 'Is Cancelling...'
     try {
+
         const response = await fetch('/venues/cancel-booking/', {
             method: 'POST',
             headers: {
@@ -426,7 +458,8 @@ async function cancelBooking(current_booking_id) {
         });
         const data = await response.json();
         if (data.success) {
-            showToastAndReload("Booking successfully canceled");
+            showToastAndReload("Booking successfully canceled ✅");
+            window.location.href = "/";
         } else {
             showToastAndReload("Error: " + data.error);
         }
@@ -488,11 +521,10 @@ function showToastAndReload(message) {
     const toast = document.getElementById('toast-notification');
     toast.textContent = message;
     toast.classList.add('show');
-    window.location.reload();
     setTimeout(() => {
-        toast.classList.remove('show');
 
-    }, 2000); // Show for 2 seconds
+        toast.classList.remove('show');
+    }, 1800); // Show for 1.8 seconds
 }
 
 async function showFavVenues(){

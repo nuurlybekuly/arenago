@@ -1,4 +1,5 @@
 let allVenues;
+let allReviews;
 let listSlots = []
 const detailCon = document.querySelector('.detail-container')
 const headMid = document.querySelector('.head-middle')
@@ -136,16 +137,23 @@ function getDaysOfSlots(){
         nextDay.setDate(today.getDate() + i); // Add i days
         if(workingWeekDays.includes(formatDate(nextDay).slice(0, 3))){
             daysInSelect.push(formatDate(nextDay))
-            document.querySelector('.date-row').innerHTML+= `<span class="date">${formatDate(nextDay)}</span>`
+            document.querySelector('.date-row').innerHTML+= `<div class="date">${formatDate(nextDay)}</div>`
         }
 
     }
-    monitorDaysClick();
+
     monitorDays(daysInSelect)
 
-
 }
-
+function monitorDaysClick() {
+document.querySelector('.date-row').addEventListener('click', function(e) {
+    if (e.target.classList.contains('date')) {
+        document.querySelectorAll('.date').forEach(s => s.classList.remove('selected'));
+        e.target.classList.add('selected');
+        console.log("vRODE");
+    }
+});
+}
 
 function selectSlots(){
     const allSlot = document.querySelectorAll('.time-slot')
@@ -193,6 +201,7 @@ function selectSlots(){
 }
 async function AvailableSlots(venue_id){
     getDaysOfSlots()
+    monitorDaysClick()
     console.log("SLOOT");
     try {
         const res = await fetch(`/venues/api/bookings/${venue_id}/`);
@@ -284,32 +293,15 @@ function showAvailableSlots(data) {
     selectSlots()
 }
 
-function monitorDaysClick() {
-    const daysBtn = document.querySelectorAll('.date-row .date');
-
-    daysBtn.forEach(dayBtn => {
-        dayBtn.addEventListener('click', () => {
-            // Remove from all first
-            daysBtn.forEach(btn => btn.classList.remove('active-day'));
-
-            // Then add to the clicked one
-            dayBtn.classList.add('active-day');
-
-            // Optional: update currentDate
-            currentDate = dayBtn.textContent.slice(4); // if your format is like "Mon 30.04"
-        });
-    });
-}
-
 
 function monitorDays(){
     console.log("COMES")
-    let daysBtn = document.querySelectorAll('.date-row span')
+    let daysBtn = document.querySelectorAll('.date-row div')
     daysBtn.forEach(dayBtn => {
         dayBtn.addEventListener('click', (e) => {
             // 1. Get clicked button
             const clickedBtn = e.target;
-
+            e.target.style.backgroundColor = 'blue';
             // 2. Update currentDate
             currentDate = clickedBtn.textContent.slice(4);
             AvailableSlots(venue_id);
@@ -341,19 +333,21 @@ async function getFavVenues(){
 
 function displayDetail(){
     getFavVenues();
+
     const allCards = document.querySelectorAll('.venue-card');
     allCards.forEach(card => {
 
         card.addEventListener('click', ()=>{
+            getReviews(card.id);
 
             headMid.style.display = "none"
             headDown.style.display = "none"
             detailCon.style.display = "block"
             venCon.style.display = "none"
             reviewsCard.style.display = "flex"
+            reviewsCard.style.flexDirection = "column"
             document.querySelector('header').style.height = "15vh"
             document.querySelector('.head-up').style.height = "90%"
-
 
             let c = allVenues.filter(crd => crd.id == card.id)[0]
 
@@ -404,10 +398,107 @@ function displayDetail(){
             })
             AddingFavoriteVenue(c.id)
             FavMonitor()
-
         })
     })
 }
+
+async function getReviews(currentVenueId){
+    try {
+        const res = await fetch(`/venues/get-reviews/?venue_id=${currentVenueId}`);
+        if (!res.ok) throw new Error('Network response was not ok');
+        const data = await res.json();
+        allReviews = data.reviews;
+        console.log("All reviews", allReviews)
+        let totalRating = 0;
+        allReviews.forEach( eachR => {
+            totalRating += eachR.rating
+        })
+        let realRating;
+        if(realRating < 6){
+            realRating = totalRating / allReviews.length;
+        }else{
+            realRating = 5.0
+        }
+
+        const reviewsCount = allReviews.filter(er => er.feedback.length > 1).length;
+        console.log(realRating)
+        console.log("reviews", allReviews);
+        const revDiv = document.querySelector('.reviews-card')
+        revDiv.innerHTML += `
+            <h2 class="reviews-title">Reviews</h2>
+            <div class="reviews-summary">
+                <div class="reviews-score">${Number(realRating.toFixed(1))}</div>
+                <div class="reviews-stars">
+                    ${renderStars(realRating)}
+                </div>
+                <div class="reviews-count">${reviewsCount} reviews</div>
+            </div>
+        `;
+        displayReviews()
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// ... existing code ...
+    function renderStars(realRating) {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            if (realRating >= i) {
+                // Full star
+                starsHtml += '<span class="star full">&#9733;</span>';
+            } else if (realRating >= i - 0.5) {
+                // Half star
+                starsHtml += '<span class="star half">&#9733;</span>';
+            } else {
+                // Empty star
+                starsHtml += '<span class="star">&#9733;</span>';
+            }
+        }
+        return starsHtml;
+    }
+// ... existing code ...
+
+function displayReviews(){
+    const revDiv = document.querySelector('.reviews-card')
+    allReviews.forEach(er => {
+        if(er.feedback.length < 1){
+
+        }else{
+          revDiv.innerHTML += `
+            <hr>
+            <div class="review">
+                <div class="review-header">
+                    <div class="review-avatar"></div>
+                    <div>
+                        <div class="review-author">${er.username}</div>
+                        <div class="review-meta">
+                            <span class="review-stars">${renderReviewStars(er.rating)}</span>
+                            <span class="review-date">${er.date}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-text">
+                    ${er.feedback}
+                </div>
+            </div>
+            `
+        }
+
+    })
+    if(allReviews.length > 3){
+        revDiv.innerHTML += `<a href="#" class="reviews-link">Read all reviews <span>&#8594;</span></a>`
+    }
+
+}
+function renderReviewStars(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        stars += `<span class="review-star" style="color:${i <= rating ? 'orange' : '#ddd'}">&#9733;</span>`;
+    }
+    return stars;
+}
+
 function FavMonitor(){
     let imageUrls = [];
     allVenues.forEach(venue => {
@@ -450,6 +541,7 @@ function FavMonitor(){
     // Set initial image
     mainImage.src = imageUrls[currentIndex];
 }
+
 
 
 
@@ -509,7 +601,7 @@ function selectSport(){
     otherSport.forEach(element => {
         element.addEventListener('click', ()=>{
             filterByType(element.textContent)
-            document.querySelector('#now_sport').innerHTML = `
+            document.querySelector('.curr-sport').innerHTML = `
                                     ${element.textContent}
         `
             document.querySelector('.other-sports').style.display = "none"
@@ -677,6 +769,28 @@ function getCookie(name) {
 window.addEventListener("beforeunload", function () {
     navigator.sendBeacon("/logout/");
 });
+
+// Mobile menu toggle function
+function toggleMobileMenu() {
+    const menu = document.querySelector('.register');
+    menu.classList.toggle('active');
+
+    // Close dropdowns when menu opens
+    document.querySelectorAll('.other-city, .other-sports').forEach(dropdown => {
+        dropdown.style.display = 'none';
+    });
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.querySelector('.register');
+    const hamburger = document.querySelector('.mobile-menu-toggle');
+
+    if (!event.target.closest('.register') && !event.target.closest('.mobile-menu-toggle') && menu.classList.contains('active')) {
+        menu.classList.remove('active');
+    }
+});
+
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     menu.classList.toggle('active');
